@@ -15,6 +15,8 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api", require("./api"));
+
 // Any routes or other various middlewares should go here!
 
 // Make sure this is right at the end of your server logic!
