@@ -5,8 +5,15 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 
+//logging middleware
 app.use(morgan("dev"));
+
+//serving static files
 app.use(express.static(path.join(__dirname, "..", "public")));
+
+// body parsing middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Any routes or other various middlewares should go here!
 
