@@ -1,0 +1,11 @@
+{
+  "name": "allies-nuptial-noshes",
+  "version": "1.0.0",
+  "description": "Allie's Nuptial Noshes Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rebecca Wahrman",
+  "license": "ISC"
+}
