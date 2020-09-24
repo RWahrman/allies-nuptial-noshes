@@ -5,6 +5,8 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const { db } = require("./db");
+const session = require("express-session");
+const passport = require("passport");
 
 //logging middleware
 app.use(morgan("dev"));
@@ -15,6 +17,39 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 // body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// configure and create our database store
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const dbStore = new SequelizeStore({ db: db });
+
+// sync so that our session table gets created
+dbStore.sync();
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "a wildly insecure secret",
+    store: dbStore,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => {
+  try {
+    done(null, user.id);
+  } catch (err) {
+    done(err);
+  }
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id)
+    .then((user) => done(null, user))
+    .catch(done);
+});
 
 app.use("/api", require("./api"));
 
@@ -38,7 +73,5 @@ const port = process.env.PORT || 3000; // this can be very useful if you deploy 
 
 db.sync();
 app.listen(port, function () {
-  console.log("Knock, knock");
-  console.log("Who's there?");
-  console.log(`Your server, listening on port ${port}`);
+  console.log(`Server listening on port ${port}`);
 });
