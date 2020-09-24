@@ -1,21 +1,25 @@
 // apiRoutes/puppies.js
 const router = require("express").Router();
 
-// matches GET requests to /api/puppies/
+// matches GET requests to /api/recipes/
 router.get("/", function (req, res, next) {
-  /* etc */
+  res.send("All Recipes GET Route");
 });
-// matches POST requests to /api/puppies/
+
 router.post("/", function (req, res, next) {
-  /* etc */
+  res.send("All Recipes POST Route");
 });
-// matches PUT requests to /api/puppies/:puppyId
+
+router.get("/:recipe-slug", function (req, res, next) {
+  res.send("One Recipe GET route");
+});
+
 router.put("/:recipe-slug", function (req, res, next) {
-  /* etc */
+  res.send("One Recipe PUT route");
 });
-// matches DELETE requests to /api/puppies/:puppyId
+
 router.delete("/:recipe-slug", function (req, res, next) {
-  /* etc */
+  res.send("One Recipe DELETE route");
 });
 
 module.exports = router;
