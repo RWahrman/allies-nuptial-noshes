@@ -4,6 +4,7 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const { db } = require("./db");
 
 //logging middleware
 app.use(morgan("dev"));
@@ -34,6 +35,8 @@ app.use(function (err, req, res, next) {
 });
 
 const port = process.env.PORT || 3000; // this can be very useful if you deploy to Heroku!
+
+db.sync();
 app.listen(port, function () {
   console.log("Knock, knock");
   console.log("Who's there?");
